@@ -26,7 +26,7 @@ func (store Store) Close() {
 }
 
 // GetStore the store singleton
-func GetStore() *Store {
+func GetStore(migrate func()) *Store {
 	once.Do(func() {
 		db, err := gorm.Open("postgres", viper.GetString("database"))
 		if err != nil {
