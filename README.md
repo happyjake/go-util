@@ -1,1 +1,1 @@
-# goutil
+# go-util
