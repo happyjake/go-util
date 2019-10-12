@@ -26,7 +26,7 @@ func (store Store) Close() {
 }
 
 // GetStore the store singleton
-func GetStore(migrate func()) *Store {
+func GetStore(migrate func(db *gorm.DB)) *Store {
 	once.Do(func() {
 		db, err := gorm.Open("postgres", viper.GetString("database"))
 		if err != nil {
@@ -35,6 +35,7 @@ func GetStore(migrate func()) *Store {
 		}
 		// dont close it now.
 		// defer db.Close()
+		migrate(db)
 
 		instance = &Store{DB: db}
 	})
